@@ -1,0 +1,567 @@
+// ~->[DNET-1]->~
+
+// File created by GmytrasiewiczP_2 at UIC using Netica 5.18 on Mar 28, 2016 at 02:46:49.
+
+bnet heart_surgery_decision_making {
+AutoCompile = TRUE;
+autoupdate = TRUE;
+whenchanged = 1459151203;
+
+visual V1 {
+	defdispform = BELIEFBARS;
+	nodelabeling = TITLE;
+	NodeMaxNumEntries = 50;
+	nodefont = font {shape= "Arial"; size= 9;};
+	linkfont = font {shape= "Arial"; size= 9;};
+	windowposn = (297, 53, 1410, 500);
+	scrollposn = (0, 59);
+	resolution = 72;
+	magnification = 0.840896;
+	drawingbounds = (3199, 1517);
+	showpagebreaks = FALSE;
+	usegrid = TRUE;
+	gridspace = (6, 6);
+	NodeSet Node {BuiltIn = 1; Color = 0x00E1E1E1;};
+	NodeSet Nature {BuiltIn = 1; Color = 0x00F8EED2;};
+	NodeSet Deterministic {BuiltIn = 1; Color = 0x00D3CAA6;};
+	NodeSet Finding {BuiltIn = 1; Color = 0x00C8C8C8;};
+	NodeSet Constant {BuiltIn = 1; Color = 0x00FFFFFF;};
+	NodeSet ConstantValue {BuiltIn = 1; Color = 0x00FFFFB4;};
+	NodeSet Utility {BuiltIn = 1; Color = 0x00FFBDBD;};
+	NodeSet Decision {BuiltIn = 1; Color = 0x00DEE8FF;};
+	NodeSet Documentation {BuiltIn = 1; Color = 0x00F0FAFA;};
+	NodeSet Title {BuiltIn = 1; Color = 0x00FFFFFF;};
+	PrinterSetting A {
+		margins = (1270, 1270, 1270, 1270);
+		};
+	};
+
+node Diet {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Bad, Good);
+	parents = ();
+	probs = 
+		// Bad          Good         
+		  (0.55,        0.45);
+	whenchanged = 1459151203;
+	belief = (0.55, 0.45);
+	visual V1 {
+		center = (582, 60);
+		height = 1;
+		};
+	};
+
+node ModerateExercice {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (No, Yes);
+	parents = ();
+	probs = 
+		// No           Yes          
+		  (0.35,        0.65);
+	whenchanged = 1459151202;
+	belief = (0.35, 0.65);
+	visual V1 {
+		center = (186, 120);
+		height = 13;
+		};
+	};
+
+node Obesity {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = (ModerateExercice, Diet);
+	probs = 
+		// Yes          No            // ModerateExercice Diet 
+		  (0.6,         0.4,          // No               Bad  
+		   0.1,         0.9,          // No               Good 
+		   0.1,         0.9,          // Yes              Bad  
+		   0.05,        0.95);        // Yes              Good ;
+	whenchanged = 1459151065;
+	belief = (0.181625, 0.818375);
+	visual V1 {
+		center = (396, 168);
+		height = 12;
+		};
+	};
+
+node SerumTrigger {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (High, Low);
+	parents = (Diet);
+	probs = 
+		// High         Low           // Diet 
+		  (0.7,         0.3,          // Bad  
+		   0.2,         0.8);         // Good ;
+	whenchanged = 1458714766;
+	belief = (0.475, 0.525);
+	visual V1 {
+		center = (690, 192);
+		height = 10;
+		};
+	};
+
+node Cholestrol_HDL_Ratio {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (High, Low);
+	parents = (Diet);
+	probs = 
+		// High         Low           // Diet 
+		  (0.75,        0.25,         // Bad  
+		   0.25,        0.75);        // Good ;
+	whenchanged = 1458714766;
+	belief = (0.525, 0.475);
+	visual V1 {
+		center = (948, 186);
+		height = 2;
+		};
+	};
+
+node SerumSelenium {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Abnormal, Normal);
+	parents = (Diet);
+	probs = 
+		// Abnormal     Normal        // Diet 
+		  (0.7,         0.3,          // Bad  
+		   0.3,         0.7);         // Good ;
+	whenchanged = 1458714766;
+	belief = (0.52, 0.48);
+	visual V1 {
+		center = (1044, 354);
+		height = 11;
+		};
+	};
+
+node SerumLDL {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (High, Low);
+	parents = (Diet);
+	probs = 
+		// High         Low           // Diet 
+		  (0.75,        0.25,         // Bad  
+		   0.25,        0.75);        // Good ;
+	whenchanged = 1458714766;
+	belief = (0.525, 0.475);
+	visual V1 {
+		center = (540, 240);
+		height = 6;
+		};
+	};
+
+node MedicineTaken {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = ();
+	probs = 
+		// Yes          No           
+		  (0.7,         0.3);
+	whenchanged = 1458714766;
+	belief = (0.7, 0.3);
+	visual V1 {
+		center = (138, 270);
+		height = 3;
+		};
+	};
+
+node SmokingAndAlcohol {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = ();
+	probs = 
+		// Yes          No           
+		  (0.8,         0.2);
+	whenchanged = 1458714766;
+	belief = (0.8, 0.2);
+	visual V1 {
+		center = (120, 360);
+		height = 5;
+		};
+	};
+
+node HighBP {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (High, Normal);
+	parents = (MedicineTaken, SmokingAndAlcohol, ModerateExercice, Obesity);
+	probs = 
+		// High         Normal        // MedicineTaken SmokingAndAlcohol ModerateExercice Obesity 
+		  (0.58,        0.42,         // Yes           Yes               No               Yes     
+		   0.52,        0.48,         // Yes           Yes               No               No      
+		   0.4,         0.6,          // Yes           Yes               Yes              Yes     
+		   0.34,        0.66,         // Yes           Yes               Yes              No      
+		   0.31,        0.69,         // Yes           No                No               Yes     
+		   0.25,        0.75,         // Yes           No                No               No      
+		   0.13,        0.87,         // Yes           No                Yes              Yes     
+		   0.07,        0.93,         // Yes           No                Yes              No      
+		   0.92,        0.08,         // No            Yes               No               Yes     
+		   0.87,        0.13,         // No            Yes               No               No      
+		   0.85,        0.15,         // No            Yes               Yes              Yes     
+		   0.79,        0.21,         // No            Yes               Yes              No      
+		   0.76,        0.24,         // No            No                No               Yes     
+		   0.7,         0.3,          // No            No                No               No      
+		   0.58,        0.42,         // No            No                Yes              Yes     
+		   0.52,        0.48);        // No            No                Yes              No      ;
+	numcases = 
+		                 // MedicineTaken SmokingAndAlcohol ModerateExercice Obesity 
+		  (1,            // Yes           Yes               No               Yes     
+		   0,            // Yes           Yes               No               No      
+		   0,            // Yes           Yes               Yes              Yes     
+		   0,            // Yes           Yes               Yes              No      
+		   0,            // Yes           No                No               Yes     
+		   0,            // Yes           No                No               No      
+		   0,            // Yes           No                Yes              Yes     
+		   0,            // Yes           No                Yes              No      
+		   -1,           // No            Yes               No               Yes     
+		   -1,           // No            Yes               No               No      
+		   -1,           // No            Yes               Yes              Yes     
+		   -1,           // No            Yes               Yes              No      
+		   -1,           // No            No                No               Yes     
+		   -1,           // No            No                No               No      
+		   -1,           // No            No                Yes              Yes     
+		   -1);          // No            No                Yes              No      ;
+	whenchanged = 1458714766;
+	belief = (0.4861825, 0.5138175);
+	visual V1 {
+		center = (348, 360);
+		height = 4;
+		};
+	};
+
+node Atherosclerosis {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = (SerumLDL, SerumTrigger, ModerateExercice, Cholestrol_HDL_Ratio);
+	probs = 
+		// Yes          No            // SerumLDL SerumTrigger ModerateExercice Cholestrol_HDL_Ratio 
+		  (0.84,        0.16,         // High     High         No               High                 
+		   0.83,        0.17,         // High     High         No               Low                  
+		   0.83,        0.17,         // High     High         Yes              High                 
+		   0.81,        0.19,         // High     High         Yes              Low                  
+		   0.61,        0.39,         // High     Low          No               High                 
+		   0.57,        0.43,         // High     Low          No               Low                  
+		   0.57,        0.43,         // High     Low          Yes              High                 
+		   0.52,        0.48,         // High     Low          Yes              Low                  
+		   0.74,        0.26,         // Low      High         No               High                 
+		   0.71,        0.29,         // Low      High         No               Low                  
+		   0.71,        0.29,         // Low      High         Yes              High                 
+		   0.68,        0.32,         // Low      High         Yes              Low                  
+		   0.35,        0.65,         // Low      Low          No               High                 
+		   0.28,        0.72,         // Low      Low          No               Low                  
+		   0.28,        0.72,         // Low      Low          Yes              High                 
+		   0.2,         0.8);         // Low      Low          Yes              Low                  ;
+	numcases = 
+		                 // SerumLDL SerumTrigger ModerateExercice Cholestrol_HDL_Ratio 
+		  (1,            // High     High         No               High                 
+		   1,            // High     High         No               Low                  
+		   1,            // High     High         Yes              High                 
+		   1,            // High     High         Yes              Low                  
+		   1,            // High     Low          No               High                 
+		   0,            // High     Low          No               Low                  
+		   0,            // High     Low          Yes              High                 
+		   0,            // High     Low          Yes              Low                  
+		   0,            // Low      High         No               High                 
+		   0,            // Low      High         No               Low                  
+		   0,            // Low      High         Yes              High                 
+		   0,            // Low      High         Yes              Low                  
+		   0,            // Low      Low          No               High                 
+		   0,            // Low      Low          No               Low                  
+		   0,            // Low      Low          Yes              High                 
+		   0);           // Low      Low          Yes              Low                  ;
+	whenchanged = 1458714826;
+	belief = (0.5724467, 0.4275533);
+	visual V1 {
+		center = (594, 360);
+		height = 8;
+		};
+	};
+
+node FamilyHistory {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = ();
+	probs = 
+		// Yes          No           
+		  (0.35,        0.65);
+	whenchanged = 1459147497;
+	belief = (0.35, 0.65);
+	visual V1 {
+		center = (816, 360);
+		height = 7;
+		};
+	};
+
+node AdverseMedicine {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = ();
+	probs = 
+		// Yes          No           
+		  (0.05,        0.95);
+	whenchanged = 1458714766;
+	belief = (0.05, 0.95);
+	visual V1 {
+		center = (180, 468);
+		height = 9;
+		};
+	};
+
+node HeartDisease {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = (Atherosclerosis, SerumSelenium, HighBP, FamilyHistory, AdverseMedicine);
+	probs = 
+		// Yes          No            // Atherosclerosis SerumSelenium HighBP FamilyHistory AdverseMedicine 
+		  (0.94,        0.06,         // Yes             Abnormal      High   Yes           Yes             
+		   0.93,        0.07,         // Yes             Abnormal      High   Yes           No              
+		   0.92,        0.08,         // Yes             Abnormal      High   No            Yes             
+		   0.91,        0.09,         // Yes             Abnormal      High   No            No              
+		   0.84,        0.16,         // Yes             Abnormal      Normal Yes           Yes             
+		   0.82,        0.18,         // Yes             Abnormal      Normal Yes           No              
+		   0.8,         0.2,          // Yes             Abnormal      Normal No            Yes             
+		   0.78,        0.22,         // Yes             Abnormal      Normal No            No              
+		   0.91,        0.09,         // Yes             Normal        High   Yes           Yes             
+		   0.91,        0.09,         // Yes             Normal        High   Yes           No              
+		   0.9,         0.1,          // Yes             Normal        High   No            Yes             
+		   0.89,        0.11,         // Yes             Normal        High   No            No              
+		   0.8,         0.2,          // Yes             Normal        Normal Yes           Yes             
+		   0.78,        0.22,         // Yes             Normal        Normal Yes           No              
+		   0.76,        0.24,         // Yes             Normal        Normal No            Yes             
+		   0.73,        0.27,         // Yes             Normal        Normal No            No              
+		   0.79,        0.21,         // No              Abnormal      High   Yes           Yes             
+		   0.77,        0.23,         // No              Abnormal      High   Yes           No              
+		   0.74,        0.26,         // No              Abnormal      High   No            Yes             
+		   0.71,        0.29,         // No              Abnormal      High   No            No              
+		   0.48,        0.52,         // No              Abnormal      Normal Yes           Yes             
+		   0.42,        0.58,         // No              Abnormal      Normal Yes           No              
+		   0.35,        0.65,         // No              Abnormal      Normal No            Yes             
+		   0.28,        0.72,         // No              Abnormal      Normal No            No              
+		   0.74,        0.26,         // No              Normal        High   Yes           Yes             
+		   0.71,        0.29,         // No              Normal        High   Yes           No              
+		   0.68,        0.32,         // No              Normal        High   No            Yes             
+		   0.64,        0.36,         // No              Normal        High   No            No              
+		   0.35,        0.65,         // No              Normal        Normal Yes           Yes             
+		   0.28,        0.72,         // No              Normal        Normal Yes           No              
+		   0.19,        0.81,         // No              Normal        Normal No            Yes             
+		   0.1,         0.9);         // No              Normal        Normal No            No              ;
+	whenchanged = 1459149643;
+	belief = (0.6778045, 0.3221955);
+	visual V1 {
+		center = (654, 492);
+		height = 18;
+		};
+	};
+
+node ECG {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Abnormal, Normal);
+	parents = (HeartDisease);
+	probs = 
+		// Abnormal     Normal        // HeartDisease 
+		  (0.95,        0.05,         // Yes          
+		   0.05,        0.95);        // No           ;
+	whenchanged = 1459150979;
+	belief = (0.660024, 0.339976);
+	visual V1 {
+		center = (162, 618);
+		height = 14;
+		};
+	};
+
+node AnginaPectoris {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = (HeartDisease);
+	probs = 
+		// Yes          No            // HeartDisease 
+		  (0.85,        0.15,         // Yes          
+		   0.4,         0.6);         // No           ;
+	whenchanged = 1458714766;
+	belief = (0.705012, 0.2949879);
+	visual V1 {
+		center = (420, 618);
+		height = 15;
+		};
+	};
+
+node Miocardial_Infraction {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = (HeartDisease);
+	probs = 
+		// Yes          No            // HeartDisease 
+		  (0.9,         0.1,          // Yes          
+		   0.05,        0.95);        // No           ;
+	whenchanged = 1458714842;
+	belief = (0.6261339, 0.3738662);
+	visual V1 {
+		center = (612, 618);
+		height = 16;
+		};
+	};
+
+node RapidHeartBeats {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Yes, No);
+	parents = (HeartDisease);
+	probs = 
+		// Yes          No            // HeartDisease 
+		  (0.99,        0.01,         // Yes          
+		   0.3,         0.7);         // No           ;
+	numcases = 1;
+	whenchanged = 1458714844;
+	belief = (0.7676851, 0.2323149);
+	visual V1 {
+		center = (780, 618);
+		height = 17;
+		};
+	};
+
+node Perform_Surgery {
+	kind = DECISION;
+	discrete = TRUE;
+	chance = DETERMIN;
+	states = (Yes, No);
+	parents = (RapidHeartBeats, Miocardial_Infraction, AnginaPectoris, ECG);
+	functable = 
+		                    // RapidHeartBeats Miocardial_Infraction AnginaPectoris ECG      
+		  (Yes,             // Yes             Yes                   Yes            Abnormal 
+		   Yes,             // Yes             Yes                   Yes            Normal   
+		   Yes,             // Yes             Yes                   No             Abnormal 
+		   Yes,             // Yes             Yes                   No             Normal   
+		   Yes,             // Yes             No                    Yes            Abnormal 
+		   No,              // Yes             No                    Yes            Normal   
+		   Yes,             // Yes             No                    No             Abnormal 
+		   No,              // Yes             No                    No             Normal   
+		   Yes,             // No              Yes                   Yes            Abnormal 
+		   No,              // No              Yes                   Yes            Normal   
+		   Yes,             // No              Yes                   No             Abnormal 
+		   No,              // No              Yes                   No             Normal   
+		   No,              // No              No                    Yes            Abnormal 
+		   No,              // No              No                    Yes            Normal   
+		   No,              // No              No                    No             Abnormal 
+		   No);             // No              No                    No             Normal   ;
+	whenchanged = 1459150970;
+	belief = (1, 0);
+	visual V1 {
+		center = (756, 792);
+		height = 22;
+		};
+	};
+
+node MajorPastSurgeriesUnderwent {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Others, None, Thoracic, Brain, Kidneys, StomachOrgans);
+	parents = ();
+	probs = 
+		// Others       None         Thoracic     Brain        Kidneys      StomachOrgans 
+		  (0.125,       0.75,        0.03,        0.02,        0.02,        0.055);
+	whenchanged = 1459149691;
+	belief = (0.125, 0.75, 0.03, 0.02, 0.02, 0.055);
+	visual V1 {
+		center = (1362, 456);
+		height = 20;
+		};
+	};
+
+node PastSurgicalComplications {
+	kind = NATURE;
+	discrete = TRUE;
+	chance = CHANCE;
+	states = (Severe, Medium, Stable);
+	parents = (MajorPastSurgeriesUnderwent);
+	probs = 
+		// Severe       Medium       Stable        // MajorPastSurgeriesUnderwent 
+		  (0.02,        0.04,        0.94,         // Others                      
+		   0.0025,      0.0125,      0.985,        // None                        
+		   0.005,       0.075,       0.92,         // Thoracic                    
+		   0.04,        0.1,         0.86,         // Brain                       
+		   0.0025,      0.0025,      0.995,        // Kidneys                     
+		   0.0025,      0.0025,      0.995);       // StomachOrgans               ;
+	numcases = 
+		                 // MajorPastSurgeriesUnderwent 
+		  (0,            // Others                      
+		   1,            // None                        
+		   0,            // Thoracic                    
+		   0,            // Brain                       
+		   0,            // Kidneys                     
+		   0);           // StomachOrgans               ;
+	whenchanged = 1459151199;
+	belief = (0.0055125, 0.0188125, 0.975675);
+	visual V1 {
+		center = (1098, 510);
+		height = 21;
+		link 1 {
+			path = ((1252, 479), (1198, 490));
+			};
+		};
+	};
+
+node Utility_of_surgery {
+	kind = UTILITY;
+	discrete = FALSE;
+	measure = RATIO;
+	chance = DETERMIN;
+	parents = (Perform_Surgery, HeartDisease, PastSurgicalComplications);
+	functable = 
+		                 // Perform_Surgery HeartDisease PastSurgicalComplications 
+		  (45,           // Yes             Yes          Severe                    
+		   65,           // Yes             Yes          Medium                    
+		   90,           // Yes             Yes          Stable                    
+		   0,            // Yes             No           Severe                    
+		   0,            // Yes             No           Medium                    
+		   0,            // Yes             No           Stable                    
+		   78,           // No              Yes          Severe                    
+		   75,           // No              Yes          Medium                    
+		   15,           // No              Yes          Stable                    
+		   100,          // No              No           Severe                    
+		   100,          // No              No           Medium                    
+		   100);         // No              No           Stable                    ;
+	ExperBase = 1;
+	whenchanged = 1459149601;
+	visual V1 {
+		center = (990, 636);
+		height = 19;
+		link 3 {
+			path = ((1067, 547), (997, 627));
+			};
+		};
+	};
+ElimOrder = (MajorPastSurgeriesUnderwent, MedicineTaken, SmokingAndAlcohol, Obesity, PastSurgicalComplications, SerumTrigger, Cholestrol_HDL_Ratio, SerumLDL, ModerateExercice, Diet, FamilyHistory, SerumSelenium, HighBP, Atherosclerosis, AdverseMedicine, HeartDisease, Perform_Surgery, ECG, AnginaPectoris, Miocardial_Infraction, RapidHeartBeats);
+};
